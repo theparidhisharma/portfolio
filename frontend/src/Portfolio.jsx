@@ -10,6 +10,7 @@ import {
   Layers,
   Terminal,
   Mail,
+  Phone,
   FileText,
   ExternalLink,
   X,
@@ -594,6 +595,24 @@ export default function Portfolio() {
         </div>
       </section>
 
+      {/* --- LINKEDIN THOUGHTS (INSTAGRAM STORY STYLE) --- */}
+      <section id="thoughts" className="py-32 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
+        <Reveal>
+          <div className="flex items-center justify-center gap-4 mb-20">
+            <Linkedin className="text-blue-500" size={40} />
+            <h2 className="text-5xl font-black tracking-tighter text-center">Featured on LinkedIn</h2>
+          </div>
+        </Reveal>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {LINKEDIN_POSTS.map((post, i) => (
+            <Reveal key={post.id} delay={i * 200}>
+              <LinkedInStoryCard post={post} />
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
       {/* --- GALLERY SECTION (MASONRY GRID) --- */}
       <section id="gallery" className="py-32 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
         <Reveal>
@@ -621,24 +640,6 @@ export default function Portfolio() {
                   {item.title}
                 </h3>
               </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* --- LINKEDIN THOUGHTS (INSTAGRAM STORY STYLE) --- */}
-      <section id="thoughts" className="py-32 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
-        <Reveal>
-          <div className="flex items-center justify-center gap-4 mb-20">
-            <Linkedin className="text-blue-500" size={40} />
-            <h2 className="text-5xl font-black tracking-tighter text-center">Featured on LinkedIn</h2>
-          </div>
-        </Reveal>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {LINKEDIN_POSTS.map((post, i) => (
-            <Reveal key={post.id} delay={i * 200}>
-              <LinkedInStoryCard post={post} />
             </Reveal>
           ))}
         </div>
@@ -692,7 +693,6 @@ export default function Portfolio() {
               >
                 <Mail size={32} /> {SOCIALS.email}
               </a>
-              
             </div>
           </Reveal>
 
@@ -714,7 +714,7 @@ export default function Portfolio() {
             </div>
           </Reveal>
 
-          <div className="absolute bottom-11 text-xs text-neutral-600 uppercase tracking-widest font-sans-ui font-bold">
+          <div className="absolute bottom-8 text-xs text-neutral-600 uppercase tracking-widest font-sans-ui font-bold">
             © 2025 Paridhi Sharma · Engineered with React
           </div>
         </div>
