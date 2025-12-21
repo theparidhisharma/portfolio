@@ -84,7 +84,8 @@ const PROJECTS = [
     overview: 'RetargetIQ is a learning-focused distributed system designed to simulate high-throughput event processing. It uses an event-driven architecture with Apache Kafka to decouple services, managing partitions and consumer groups to handle event streams efficiently. The project explores patterns for data consistency and scalability in a containerized environment.',
     stack: ['Java', 'Spring Boot', 'Kafka', 'Redis', 'Docker'],
     year: '2025',
-    github: "https://github.com/theparidhisharma/RetargetIQ", // Assumed repo name
+    github: "https://github.com/theparidhisharma/RetargetIQ", 
+    liveLink: "https://retarget-iq-frontend.vercel.app/", 
     demoImage: "RETARGETIQ_1.png" 
   },
   {
@@ -95,7 +96,8 @@ const PROJECTS = [
     overview: 'Auto IQ is an experimental agentic AI system exploring the intersection of machine learning and backend engineering. It ingests sensor-like data, runs it through a predictive model to assess failure risks, and simulates automated maintenance workflow triggers based on defined thresholds.',
     stack: ['Python', 'PyTorch', 'FastAPI', 'Docker', 'Postgres'],
     year: '2025',
-    github: "https://github.com/theparidhisharma/AutoIQ", // Assumed repo name
+    github: "https://github.com/theparidhisharma/AutoIQ",
+    liveLink: "#", 
     demoImage: "AUTOIQ_1.png" 
   },
   {
@@ -106,7 +108,8 @@ const PROJECTS = [
     overview: 'A full-stack web application built to address the usability challenges of legacy academic systems. The portal features a responsive React frontend consuming RESTful APIs to display grades, attendance, and schedules. It focuses on modular component design and clean data visualization.',
     stack: ['React', 'Node.js', 'PostgreSQL', 'REST APIs', 'Tailwind'],
     year: '2024',
-    github: "https://github.com/theparidhisharma/StudentPortal", // Assumed repo name
+    github: "https://github.com/theparidhisharma/StudentPortal",
+    liveLink: "https://student-portal-navy-six.vercel.app/", 
     demoImage: "STUDENTPORTAL_1.png" 
   }
 ];
@@ -193,7 +196,8 @@ const GALLERY = [
     category: "Lead",
     image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2670&auto=format&fit=crop",
     shortDesc: "Mentoring juniors in automation.",
-    longDesc: "Leading the Campus Robotics Club allowed me to merge my love for code with hardware. We built an autonomous line-following robot that won the inter-college championship. My role involved mentoring 20+ junior students and managing the club's technical resources."
+    longDesc: "Leading the Campus Robotics Club allowed me to merge my love for code with hardware. We built an autonomous line-following robot that won the inter-college championship. My role involved mentoring 20+ junior students and managing the club's technical resources.",
+    video: "https://assets.mixkit.co/videos/preview/mixkit-tech-futuristic-interface-992-large.mp4" 
   }
 ];
 
@@ -214,14 +218,9 @@ const SKILLS = [
     desc: "Python, SQL, Predictive Modeling, Inference Pipelines"
   },
   {
-    name: "Web Technologies",
+    name: "Web & UI Engineering",
     icon: <Code2 size={24} />,
-    desc: "React, REST APIs, HTML/CSS, Git"
-  },
-  {
-    name: "UI Design & Frontend",
-    icon: <Palette size={24} />,
-    desc: "Pixel-perfect interfaces, Responsive Design, Tailwind CSS"
+    desc: "React, REST APIs, Tailwind CSS, Responsive Design, Git"
   }
 ];
 
@@ -378,14 +377,98 @@ const ProjectModal = ({ project, onClose }) => {
             </div>
           </div>
 
-          <a 
-            href={project.github}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all rounded-sm"
-          >
-            <Github size={20} /> View on GitHub
-          </a>
+          <div className="flex flex-wrap gap-4">
+              <a 
+                href={project.github}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all rounded-sm"
+              >
+                <Github size={20} /> View on GitHub
+              </a>
+
+              {project.liveLink && (
+                 <a 
+                    href={project.liveLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-3 px-8 py-4 border border-white/20 bg-transparent text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all rounded-sm"
+                  >
+                    <Globe size={20} /> Live Demo
+                 </a>
+              )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const GalleryCard = ({ item, spanClass, setHoveredGalleryItem, hoveredGalleryItem, setActiveGalleryItem }) => {
+  const videoRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    setHoveredGalleryItem(item.id);
+    const video = videoRef.current;
+    if (item.video && video) {
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                // Auto-play was prevented
+            });
+        }
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredGalleryItem(null);
+    const video = videoRef.current;
+    if (item.video && video) {
+      video.pause();
+      video.currentTime = 0; 
+    }
+  };
+
+  return (
+    <div 
+      className={`${spanClass} relative group cursor-pointer overflow-hidden rounded-sm transition-all duration-500 ${hoveredGalleryItem && hoveredGalleryItem !== item.id ? 'blur-[2px] opacity-40 scale-95 grayscale' : 'scale-100 opacity-100'}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={() => setActiveGalleryItem(item)}
+    >
+      <div className="w-full h-full relative">
+        <img 
+          src={item.image} 
+          alt={item.title} 
+          className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${item.video ? 'group-hover:opacity-0' : ''}`}
+        />
+        
+        {item.video && (
+           <video
+             ref={videoRef}
+             src={item.video}
+             muted
+             loop
+             playsInline
+             className="absolute inset-0 w-full h-full object-cover opacity-0 hover:opacity-100 transition-opacity duration-500"
+           />
+        )}
+
+        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500 pointer-events-none" />
+        
+        <div className={`absolute inset-0 flex flex-col justify-end p-8 transition-opacity duration-500 ${hoveredGalleryItem === item.id ? 'opacity-100' : 'opacity-0'}`}>
+          <span className="text-xs font-sans-ui font-bold uppercase tracking-widest text-blue-400 block mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
+            {item.category}
+          </span>
+          <h3 className="text-3xl font-black text-white italic tracking-tight mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-150">
+            {item.title}
+          </h3>
+          <p className="text-sm text-neutral-200 font-sans-ui line-clamp-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-200">
+            {item.shortDesc}
+          </p>
+          <div className="mt-4 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-300">
+            Read Story <ArrowUpRight size={14} />
+          </div>
         </div>
       </div>
     </div>
@@ -402,7 +485,11 @@ const GalleryModal = ({ item, onClose }) => {
           <X size={24} />
         </button>
         <div className="w-full md:w-1/2 h-64 md:h-auto relative bg-neutral-900">
-          <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+           {item.video ? (
+             <video src={item.video} autoPlay loop muted playsInline className="w-full h-full object-cover" />
+           ) : (
+             <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+           )}
         </div>
         <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
           <span className="text-blue-400 font-bold tracking-widest text-xs uppercase mb-2">{item.category}</span>
@@ -440,10 +527,10 @@ export default function Portfolio() {
     {
       icon: <Music size={18} />,
       label: "Music",
-      text: "Vocalist: Won 3rd place solo at 'Symphony, Delhi' \n Multiple Zonal 1st positions for choir."
+      text: "Singer: Won 3rd Solo at 'SYMPHONY, DELHI' & multiple Zonal 1st positions for East Delhi Choir."
     },
     {
-      icon: <Music size={18} />,
+      icon: <Palette size={18} />,
       label: "Kathak",
       text: "Trained in Kathak dance; performed at various cultural festivals."
     }
@@ -588,11 +675,13 @@ export default function Portfolio() {
         {/* ROW 1: EXPERIENCE */}
         <div className="grid md:grid-cols-12 gap-16 mb-32">
           <div className="md:col-span-4 relative">
-            <Reveal>
-              <h2 className="text-6xl font-black tracking-tighter mb-12 text-white sticky top-32">
-                Experience
-              </h2>
-            </Reveal>
+             <div className="sticky top-32">
+                <Reveal>
+                  <h2 className="text-6xl font-black tracking-tighter mb-12 text-white">
+                    Experience
+                  </h2>
+                </Reveal>
+             </div>
           </div>
           <div className="md:col-span-8 space-y-16">
             <Reveal delay={200}>
@@ -616,17 +705,28 @@ export default function Portfolio() {
                 </div>
               </Reveal>
             ))}
+
+            <Reveal delay={400}>
+                <a 
+                  href={SOCIALS.resume} 
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-sans-ui font-bold text-sm uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-colors"
+                >
+                  <FileText size={16} /> Download Resume
+                </a>
+            </Reveal>
           </div>
         </div>
 
         {/* ROW 2: COMMUNITY & FUN FACT */}
-        <div className="grid md:grid-cols-12 gap-16">
-           <div className="md:col-span-4">
-              {/* FUN FACT CARD - Now Aligned with Community Section */}
+        <div className="grid md:grid-cols-12 gap-16 border-t border-white/10 pt-20">
+           {/* LEFT COLUMN: FUN FACT */}
+           <div className="md:col-span-4 relative">
               <Reveal delay={200}>
                 <div 
                   onClick={handleFunFactClick}
-                  className="hidden md:block cursor-pointer p-8 border border-white/10 bg-white/5 rounded-2xl backdrop-blur-md relative overflow-hidden group hover:border-blue-500/30 transition-all"
+                  className="hidden md:block cursor-pointer p-8 border border-white/10 bg-white/5 rounded-2xl backdrop-blur-md relative overflow-hidden group hover:border-blue-500/30 transition-all sticky top-32"
                 >
                   <div className="absolute -right-4 -top-4 bg-blue-500/10 w-24 h-24 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-colors" />
                   <div className="relative z-10">
@@ -639,60 +739,49 @@ export default function Portfolio() {
                     </div>
                     
                     <div className="min-h-[100px] flex flex-col justify-center">
-                       {funFactRevealed ? (
-                         <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-                           <div className="flex items-center gap-2 mb-2 text-white">
-                             {FUN_FACTS[funFactIndex].icon}
-                             <span className="font-bold">{FUN_FACTS[funFactIndex].label}</span>
-                           </div>
-                           <p className="text-sm text-neutral-400 leading-relaxed font-sans-ui">
-                             {FUN_FACTS[funFactIndex].text}
-                           </p>
-                           <span className="text-[10px] text-neutral-600 mt-4 block uppercase tracking-widest">Click for another</span>
-                         </div>
-                       ) : (
-                         <span className="text-4xl font-black text-white/10 group-hover:text-white/20 transition-colors">
-                           CLICK TO REVEAL
-                         </span>
-                       )}
+                      {funFactRevealed ? (
+                        <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+                          <div className="flex items-center gap-2 mb-2 text-white">
+                            {FUN_FACTS[funFactIndex].icon}
+                            <span className="font-bold">{FUN_FACTS[funFactIndex].label}</span>
+                          </div>
+                          <p className="text-sm text-neutral-400 leading-relaxed font-sans-ui">
+                            {FUN_FACTS[funFactIndex].text}
+                          </p>
+                          <span className="text-[10px] text-neutral-600 mt-4 block uppercase tracking-widest">Click for another</span>
+                        </div>
+                      ) : (
+                        <span className="text-4xl font-black text-white/10 group-hover:text-white/20 transition-colors">
+                          FUN FACTS ;)
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
               </Reveal>
            </div>
            
+           {/* RIGHT COLUMN: COMMUNITY GRID */}
            <div className="md:col-span-8">
-              {/* COMMUNITY SECTION */}
-              <div className="border-t border-white/10 pt-12">
-                 <h3 className="text-2xl font-bold font-sans-ui uppercase tracking-widest text-neutral-500 mb-8">Community & Leadership</h3>
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {LEADERSHIP.map((role, i) => (
-                      <Reveal key={i} delay={400 + (i * 100)}>
-                        <div className="group border border-white/10 bg-white/5 p-6 rounded-lg hover:border-blue-500/50 transition-colors">
+               <h3 className="text-2xl font-bold font-sans-ui uppercase tracking-widest text-neutral-500 mb-8">Community & Leadership</h3>
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {LEADERSHIP.map((role, i) => (
+                    <Reveal key={i} delay={400 + (i * 100)}>
+                      <div className="group border border-white/10 bg-white/5 p-6 rounded-lg hover:border-blue-500/50 transition-colors h-full flex flex-col justify-between">
+                        <div>
                           <div className="flex items-center gap-3 mb-3 text-blue-400">
                             <Users size={18} />
                             <span className="text-xs font-bold uppercase tracking-widest">{role.org}</span>
                           </div>
                           <h4 className="text-xl font-bold text-white mb-2">{role.role}</h4>
-                          <p className="text-sm text-neutral-400 font-sans-ui leading-relaxed">
-                            {role.desc}
-                          </p>
                         </div>
-                      </Reveal>
-                    ))}
-                 </div>
-              </div>
-
-              <Reveal delay={700}>
-                 <a 
-                   href={SOCIALS.resume} 
-                   target="_blank"
-                   rel="noreferrer"
-                   className="inline-flex items-center gap-2 px-6 py-3 mt-12 bg-white text-black font-sans-ui font-bold text-sm uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-colors"
-                 >
-                   <FileText size={16} /> Download Resume
-                 </a>
-              </Reveal>
+                        <p className="text-sm text-neutral-400 font-sans-ui leading-relaxed mt-4">
+                          {role.desc}
+                        </p>
+                      </div>
+                    </Reveal>
+                  ))}
+               </div>
            </div>
         </div>
       </section>
@@ -758,7 +847,7 @@ export default function Portfolio() {
             My Arsenal
           </h2>
         </Reveal>
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-px bg-white/20 border border-white/20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/20 border border-white/20">
           {SKILLS.map((skill, i) => (
             <Reveal key={i} delay={i * 100} className="bg-[#050505] p-6 group hover:bg-[#0a0a0a] transition-colors h-full">
               <div className="mb-8 text-neutral-600 group-hover:text-blue-500 transition-colors duration-300">
@@ -812,33 +901,13 @@ export default function Portfolio() {
             const spanClass = getGallerySpan(i); // Calculate layout dynamically
             return (
               <Reveal key={item.id} delay={i * 100} className={`${spanClass} relative group cursor-pointer overflow-hidden rounded-sm transition-all duration-500 ${hoveredGalleryItem && hoveredGalleryItem !== item.id ? 'blur-[2px] opacity-40 scale-95 grayscale' : 'scale-100 opacity-100'}`}>
-                <div 
-                  className="w-full h-full relative"
-                  onMouseEnter={() => setHoveredGalleryItem(item.id)}
-                  onClick={() => setActiveGalleryItem(item)}
-                >
-                  <img 
-                    src={item.image} 
-                    alt={item.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />
-                  
-                  <div className={`absolute inset-0 flex flex-col justify-end p-8 transition-opacity duration-500 ${hoveredGalleryItem === item.id ? 'opacity-100' : 'opacity-0'}`}>
-                    <span className="text-xs font-sans-ui font-bold uppercase tracking-widest text-blue-400 block mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
-                      {item.category}
-                    </span>
-                    <h3 className="text-3xl font-black text-white italic tracking-tight mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-150">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-neutral-200 font-sans-ui line-clamp-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-200">
-                      {item.shortDesc}
-                    </p>
-                    <div className="mt-4 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-300">
-                      Read Story <ArrowUpRight size={14} />
-                    </div>
-                  </div>
-                </div>
+                <GalleryCard 
+                  item={item} 
+                  spanClass="" 
+                  setHoveredGalleryItem={setHoveredGalleryItem} 
+                  hoveredGalleryItem={hoveredGalleryItem} 
+                  setActiveGalleryItem={setActiveGalleryItem}
+                />
               </Reveal>
             );
           })}
