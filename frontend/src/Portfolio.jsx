@@ -15,7 +15,8 @@ import {
   ExternalLink,
   X,
   ChevronRight,
-  Camera
+  Camera,
+  Palette
 } from 'lucide-react';
 
 /* =======================
@@ -151,35 +152,38 @@ const LINKEDIN_POSTS = [
   }
 ];
 
-// NEW GALLERY DATA
 const GALLERY = [
   {
     id: 1,
     title: "Smart India Hackathon",
     category: "Finalist 2024",
     image: "https://images.unsplash.com/photo-1504384308090-c54be3852633?q=80&w=2336&auto=format&fit=crop",
-    span: "md:col-span-2 md:row-span-2"
+    shortDesc: "National finalist among 500+ teams.",
+    longDesc: "Reaching the grand finale of the Smart India Hackathon was a defining moment. Our team engineered a real-time waste management solution using IoT sensors and a centralized dashboard. Over 36 hours of non-stop coding, we tackled hardware-software integration challenges and pitched to industry experts."
   },
   {
     id: 2,
     title: "Tech Summit Delhi",
     category: "Volunteer",
     image: "https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=2669&auto=format&fit=crop",
-    span: "md:col-span-1 md:row-span-1"
+    shortDesc: "Managing logistics for 1000+ attendees.",
+    longDesc: "As a volunteer at Tech Summit Delhi, I was responsible for speaker coordination and attendee registration. It was an exercise in crisis management and communication, ensuring smooth operations for over 1000 developers and tech leaders."
   },
   {
     id: 3,
     title: "Open Source Meetup",
     category: "Community",
     image: "https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=2670&auto=format&fit=crop",
-    span: "md:col-span-1 md:row-span-1"
+    shortDesc: "Contributing to the dev ecosystem.",
+    longDesc: "I am an active participant in the local Open Source community. From conducting workshops on 'Getting Started with Git' to contributing to documentation for community projects, I believe in the power of shared knowledge and collaborative building."
   },
   {
     id: 4,
     title: "Campus Robotics Club",
     category: "Lead",
     image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2670&auto=format&fit=crop",
-    span: "md:col-span-2 md:row-span-1"
+    shortDesc: "Mentoring juniors in automation.",
+    longDesc: "Leading the Campus Robotics Club allowed me to merge my love for code with hardware. We built an autonomous line-following robot that won the inter-college championship. My role involved mentoring 20+ junior students and managing the club's technical resources."
   }
 ];
 
@@ -203,6 +207,11 @@ const SKILLS = [
     name: "Web Technologies",
     icon: <Code2 size={24} />,
     desc: "React, REST APIs, HTML/CSS, Git"
+  },
+  {
+    name: "UI Design & Frontend",
+    icon: <Palette size={24} />,
+    desc: "Pixel-perfect interfaces, Responsive Design, Tailwind CSS"
   }
 ];
 
@@ -256,7 +265,7 @@ const Marquee = ({ text, reverse = false }) => (
 );
 
 const LinkedInStoryCard = ({ post }) => (
-  <div className="relative group w-full hover-trigger">
+  <div className="relative group w-full hover-trigger aspect-[4/5]">
     {/* Background Blur Layer */}
     <div 
       className="absolute inset-0 bg-cover bg-center blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-700 rounded-3xl"
@@ -264,7 +273,7 @@ const LinkedInStoryCard = ({ post }) => (
     />
     
     {/* The Card Container */}
-    <div className="relative bg-[#111] border border-white/10 rounded-3xl overflow-hidden shadow-2xl transition-transform duration-500 group-hover:-translate-y-2 h-full">
+    <div className="relative bg-[#111] border border-white/10 rounded-3xl overflow-hidden shadow-2xl transition-transform duration-500 group-hover:-translate-y-2 h-full flex flex-col">
       
       {/* Header */}
       <div className="absolute top-0 left-0 w-full p-4 flex justify-between items-center z-20 bg-gradient-to-b from-black/80 to-transparent">
@@ -278,7 +287,7 @@ const LinkedInStoryCard = ({ post }) => (
       </div>
 
       {/* Main Image */}
-      <div className="aspect-[4/5] overflow-hidden relative bg-neutral-900">
+      <div className="relative flex-grow bg-neutral-900 overflow-hidden">
         <img 
           src={post.image} 
           alt={post.title} 
@@ -373,12 +382,56 @@ const ProjectModal = ({ project, onClose }) => {
   );
 };
 
+const GalleryModal = ({ item, onClose }) => {
+  if (!item) return null;
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
+      <div className="absolute inset-0 bg-black/90 backdrop-blur-md" onClick={onClose} />
+      <div className="relative w-full max-w-4xl bg-[#0a0a0a] border border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row animate-in fade-in zoom-in-95 duration-300">
+        <button onClick={onClose} className="absolute top-4 right-4 z-50 p-2 rounded-full bg-black/50 hover:bg-white hover:text-black border border-white/10 transition-colors">
+          <X size={24} />
+        </button>
+        <div className="w-full md:w-1/2 h-64 md:h-auto relative bg-neutral-900">
+          <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+        </div>
+        <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+          <span className="text-blue-400 font-bold tracking-widest text-xs uppercase mb-2">{item.category}</span>
+          <h2 className="text-3xl font-black mb-6 text-white leading-tight">{item.title}</h2>
+          <p className="text-neutral-300 leading-relaxed font-sans-ui">{item.longDesc}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 /* =======================
    MAIN PORTFOLIO
 ======================= */
 export default function Portfolio() {
   const [scrolled, setScrolled] = useState(0);
+  
+  // State for dynamic content
+  const [posts, setPosts] = useState(LINKEDIN_POSTS);
+  const [galleryItems, setGalleryItems] = useState(GALLERY);
+  
   const [activeProject, setActiveProject] = useState(null);
+  const [hoveredGalleryItem, setHoveredGalleryItem] = useState(null);
+  const [activeGalleryItem, setActiveGalleryItem] = useState(null);
+
+  // ALGORITHMIC LAYOUT GENERATOR
+  // This ensures a nice bento grid regardless of how many items you add.
+  // It cycles through a set of spans: Big, Small, Small, Wide, Small, Tall...
+  const getGallerySpan = (index) => {
+    const pattern = [
+      "md:col-span-2 md:row-span-2", // 0: Big Square
+      "md:col-span-1 md:row-span-1", // 1: Small Square
+      "md:col-span-1 md:row-span-1", // 2: Small Square
+      "md:col-span-2 md:row-span-1", // 3: Wide Rectangle
+      "md:col-span-1 md:row-span-2", // 4: Tall Rectangle
+      "md:col-span-1 md:row-span-1", // 5: Small Square
+    ];
+    return pattern[index % pattern.length];
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY);
@@ -416,9 +469,12 @@ export default function Portfolio() {
         }
       `}</style>
 
-      {/* Project Modal */}
+      {/* Modals */}
       {activeProject && (
         <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
+      )}
+      {activeGalleryItem && (
+        <GalleryModal item={activeGalleryItem} onClose={() => setActiveGalleryItem(null)} />
       )}
 
       {/* --- BACKGROUND AMBIENCE --- */}
@@ -439,7 +495,7 @@ export default function Portfolio() {
           Paridhi.sh
         </div>
         <nav className="flex gap-8 text-xs font-bold font-sans-ui uppercase tracking-widest mix-blend-difference">
-          {['About', 'Work', 'Gallery', 'Contact'].map((item) => (
+          {['About', 'Work', 'Thoughts', 'Expertise', 'Gallery', 'Contact'].map((item) => (
             <a key={item} href={`#${item.toLowerCase()}`} className="hover-trigger hover:text-blue-400 transition-colors relative group">
               {item}
               <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-blue-400 transition-all duration-300 group-hover:w-full" />
@@ -595,56 +651,6 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* --- LINKEDIN THOUGHTS (INSTAGRAM STORY STYLE) --- */}
-      <section id="thoughts" className="py-32 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
-        <Reveal>
-          <div className="flex items-center justify-center gap-4 mb-20">
-            <Linkedin className="text-blue-500" size={40} />
-            <h2 className="text-5xl font-black tracking-tighter text-center">Featured on LinkedIn</h2>
-          </div>
-        </Reveal>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {LINKEDIN_POSTS.map((post, i) => (
-            <Reveal key={post.id} delay={i * 200}>
-              <LinkedInStoryCard post={post} />
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* --- GALLERY SECTION (MASONRY GRID) --- */}
-      <section id="gallery" className="py-32 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
-        <Reveal>
-          <div className="flex items-center gap-4 mb-20">
-            <Camera className="text-blue-500" size={40} />
-            <h2 className="text-6xl font-black tracking-tighter">Beyond Code</h2>
-          </div>
-        </Reveal>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-4 h-auto md:h-[800px]">
-          {GALLERY.map((item, i) => (
-            <Reveal key={item.id} delay={i * 150} className={`${item.span} relative group hover-trigger overflow-hidden rounded-sm`}>
-              <img 
-                src={item.image} 
-                alt={item.title} 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100"
-              />
-              <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500" />
-              
-              <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/90 to-transparent translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                <span className="text-xs font-sans-ui font-bold uppercase tracking-widest text-blue-400 block mb-2">
-                  {item.category}
-                </span>
-                <h3 className="text-2xl font-black text-white italic tracking-tight">
-                  {item.title}
-                </h3>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
       {/* --- EXPERTISE --- */}
       <section id="expertise" className="py-20 px-6 md:px-12 max-w-[1600px] mx-auto relative z-10">
         <Reveal>
@@ -652,9 +658,9 @@ export default function Portfolio() {
             My Arsenal
           </h2>
         </Reveal>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/20 border border-white/20">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-px bg-white/20 border border-white/20">
           {SKILLS.map((skill, i) => (
-            <Reveal key={i} delay={i * 100} className="bg-[#050505] p-12 group hover:bg-[#0a0a0a] transition-colors h-full">
+            <Reveal key={i} delay={i * 100} className="bg-[#050505] p-6 group hover:bg-[#0a0a0a] transition-colors h-full">
               <div className="mb-8 text-neutral-600 group-hover:text-blue-500 transition-colors duration-300">
                 {skill.icon}
               </div>
@@ -666,6 +672,76 @@ export default function Portfolio() {
               </p>
             </Reveal>
           ))}
+        </div>
+      </section>
+
+      {/* --- LINKEDIN THOUGHTS --- */}
+      <section id="thoughts" className="py-32 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
+        <Reveal>
+          <div className="flex items-center justify-center gap-4 mb-20">
+            <Linkedin className="text-blue-500" size={40} />
+            <h2 className="text-5xl font-black tracking-tighter text-center">Featured on LinkedIn</h2>
+          </div>
+        </Reveal>
+        
+        {/* Responsive Grid for Dynamic Posts */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          {posts.map((post, i) => (
+            <Reveal key={post.id} delay={i * 100}>
+              <LinkedInStoryCard post={post} />
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* --- GALLERY SECTION (SCALABLE + ALGORITHMIC LAYOUT) --- */}
+      <section id="gallery" className="py-32 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
+        <Reveal>
+          <div className="flex items-center gap-4 mb-20">
+            <Camera className="text-blue-500" size={40} />
+            <h2 className="text-6xl font-black tracking-tighter">Beyond Code</h2>
+          </div>
+        </Reveal>
+
+        {/* Algorithmic Grid */}
+        <div 
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[350px]" 
+          onMouseLeave={() => setHoveredGalleryItem(null)}
+        >
+          {galleryItems.map((item, i) => {
+            const spanClass = getGallerySpan(i); // Calculate layout dynamically
+            return (
+              <Reveal key={item.id} delay={i * 100} className={`${spanClass} relative group cursor-pointer overflow-hidden rounded-sm transition-all duration-500 ${hoveredGalleryItem && hoveredGalleryItem !== item.id ? 'blur-[2px] opacity-40 scale-95 grayscale' : 'scale-100 opacity-100'}`}>
+                <div 
+                  className="w-full h-full relative"
+                  onMouseEnter={() => setHoveredGalleryItem(item.id)}
+                  onClick={() => setActiveGalleryItem(item)}
+                >
+                  <img 
+                    src={item.image} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />
+                  
+                  <div className={`absolute inset-0 flex flex-col justify-end p-8 transition-opacity duration-500 ${hoveredGalleryItem === item.id ? 'opacity-100' : 'opacity-0'}`}>
+                    <span className="text-xs font-sans-ui font-bold uppercase tracking-widest text-blue-400 block mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                      {item.category}
+                    </span>
+                    <h3 className="text-3xl font-black text-white italic tracking-tight mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-150">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-neutral-200 font-sans-ui line-clamp-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-200">
+                      {item.shortDesc}
+                    </p>
+                    <div className="mt-4 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-300">
+                      Read Story <ArrowUpRight size={14} />
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            );
+          })}
         </div>
       </section>
 
