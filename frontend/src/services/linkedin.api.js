@@ -1,14 +1,14 @@
 import { createClient } from "@sanity/client";
 
 const client = createClient({
-  projectId: "YOUR_PROJECT_ID",
+  projectId: "YOUR_SANITY_PROJECT_ID",
   dataset: "production",
   apiVersion: "2024-01-01",
   useCdn: true
 });
 
-export const fetchLinkedinPosts = async () => {
-  return client.fetch(`
+export const fetchLinkedinPosts = () =>
+  client.fetch(`
     *[_type == "linkedinPost"] | order(publishedAt desc) {
       _id,
       title,
@@ -18,4 +18,3 @@ export const fetchLinkedinPosts = async () => {
       "image": coverImage.asset->url
     }
   `);
-};
