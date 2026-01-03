@@ -6,10 +6,17 @@ const aiRoutes = require("./routes/ai.routes");
 
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
+// Routes
 app.use("/api/linkedin", linkedinRoutes);
 app.use("/api/ai", aiRoutes);
+
+// Health check
+app.get("/health", (req, res) => {
+  res.json({ status: "OK" });
+});
 
 module.exports = app;
