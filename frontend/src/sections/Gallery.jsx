@@ -1,49 +1,56 @@
-import { useState } from "react";
-import Reveal from "../components/common/Reveal";
-import GalleryCard from "../components/gallery/GalleryCard";
-import GalleryModal from "../components/gallery/GalleryModal";
-import { GALLERY } from "../data/gallery";
-import { Camera } from "lucide-react";
+import React, { useState } from 'react';
+import Reveal from '../components/common/Reveal';
+import GalleryCard from '../components/gallery/GalleryCard';
+import { GALLERY } from '../data/gallery';
+import { Camera } from 'lucide-react';
 
-export default function Gallery() {
-  const [hovered, setHovered] = useState(null);
-  const [active, setActive] = useState(null);
+const Gallery = ({ setActiveGalleryItem }) => {
+  const [hoveredGalleryItem, setHoveredGalleryItem] = useState(null);
 
-  const getGallerySpan = (i) => {
+  // ALGORITHMIC LAYOUT GENERATOR
+  const getGallerySpan = (index) => {
     const pattern = [
-      "md:col-span-2 md:row-span-2",
-      "md:col-span-1 md:row-span-1",
-      "md:col-span-1 md:row-span-1",
-      "md:col-span-2 md:row-span-1",
-      "md:col-span-1 md:row-span-2",
-      "md:col-span-1 md:row-span-1"
+      "md:col-span-2 md:row-span-2", // 0: Big Square
+      "md:col-span-1 md:row-span-1", // 1: Small Square
+      "md:col-span-1 md:row-span-1", // 2: Small Square
+      "md:col-span-2 md:row-span-1", // 3: Wide Rectangle
+      "md:col-span-1 md:row-span-2", // 4: Tall Rectangle
+      "md:col-span-1 md:row-span-1", // 5: Small Square
     ];
-    return pattern[i % pattern.length];
+    return pattern[index % pattern.length];
   };
 
   return (
-    <section id="gallery" className="py-32 px-6 md:px-12 max-w-[1400px] mx-auto">
+    <section id="gallery" className="py-32 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
       <Reveal>
         <div className="flex items-center gap-4 mb-20">
-          <Camera size={40} className="text-blue-500" />
-          <h2 className="text-6xl font-black">Beyond Code</h2>
+          <Camera className="text-blue-500" size={40} />
+          <h2 className="text-6xl font-black tracking-tighter">Beyond Code</h2>
         </div>
       </Reveal>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[350px]">
-        {GALLERY.map((item, i) => (
-          <Reveal key={item.id} delay={i * 100} className={getGallerySpan(i)}>
-            <GalleryCard
-              item={item}
-              hoveredGalleryItem={hovered}
-              setHoveredGalleryItem={setHovered}
-              setActiveGalleryItem={setActive}
-            />
-          </Reveal>
-        ))}
+      {/* Algorithmic Grid */}
+      <div 
+        className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[350px]" 
+        onMouseLeave={() => setHoveredGalleryItem(null)}
+      >
+        {GALLERY.map((item, i) => {
+          const spanClass = getGallerySpan(i); // Calculate layout dynamically
+          return (
+            <Reveal key={item.id} delay={i * 100} className={`${spanClass} relative`}>
+              <GalleryCard 
+                item={item} 
+                spanClass="" 
+                setHoveredGalleryItem={setHoveredGalleryItem} 
+                hoveredGalleryItem={hoveredGalleryItem} 
+                setActiveGalleryItem={setActiveGalleryItem}
+              />
+            </Reveal>
+          );
+        })}
       </div>
-
-      {active && <GalleryModal item={active} onClose={() => setActive(null)} />}
     </section>
   );
-}
+};
+
+export default Gallery;

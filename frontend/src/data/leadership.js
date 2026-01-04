@@ -17,6 +17,6 @@ export const LEADERSHIP = [
   {
     role: "PR HEAD",
     org: "Tarannum IGDTUW",
-    desc: "Managing PR for music society, IGDTUW."
+    desc: "Managing PR for music society,IGDTUW."
   }
 ];

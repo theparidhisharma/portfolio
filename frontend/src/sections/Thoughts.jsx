@@ -1,20 +1,35 @@
-import Reveal from "../components/common/Reveal";
-import LinkedInStoryCard from "../components/linkedin/LinkedInStoryCard";
-import { LINKEDIN_POSTS } from "../data/linkedin";
-import { Linkedin } from "lucide-react";
+import React, { useEffect, useState } from 'react';
+import Reveal from '../components/common/Reveal';
+import LinkedInStoryCard from '../components/linkedin/LinkedInStoryCard';
+import { Linkedin } from 'lucide-react';
+import { fetchLinkedinPosts } from '../services/linkedin.api'; // Integration
+import { LINKEDIN_POSTS } from '../data/linkedin'; // Fallback
 
-export default function Thoughts() {
+const Thoughts = () => {
+  const [posts, setPosts] = useState(LINKEDIN_POSTS);
+
+  // Un-comment this to use real API when backend is ready
+  /*
+  useEffect(() => {
+    const getPosts = async () => {
+      const data = await fetchLinkedinPosts();
+      if(data && data.length > 0) setPosts(data);
+    };
+    getPosts();
+  }, []);
+  */
+
   return (
-    <section id="thoughts" className="py-32 px-6 md:px-12 max-w-[1400px] mx-auto">
+    <section id="thoughts" className="py-32 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
       <Reveal>
-        <div className="flex justify-center items-center gap-4 mb-20">
-          <Linkedin size={40} className="text-blue-500" />
-          <h2 className="text-5xl font-black">Featured on LinkedIn</h2>
+        <div className="flex items-center justify-center gap-4 mb-20">
+          <Linkedin className="text-blue-500" size={40} />
+          <h2 className="text-5xl font-black tracking-tighter text-center">Featured on LinkedIn</h2>
         </div>
       </Reveal>
-
+      
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-        {LINKEDIN_POSTS.map((post, i) => (
+        {posts.map((post, i) => (
           <Reveal key={post.id} delay={i * 100}>
             <LinkedInStoryCard post={post} />
           </Reveal>
@@ -22,4 +37,6 @@ export default function Thoughts() {
       </div>
     </section>
   );
-}
+};
+
+export default Thoughts;

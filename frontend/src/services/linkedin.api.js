@@ -1,20 +1,14 @@
-import { createClient } from "@sanity/client";
+import axios from 'axios';
 
-const client = createClient({
-  projectId: "YOUR_SANITY_PROJECT_ID",
-  dataset: "production",
-  apiVersion: "2024-01-01",
-  useCdn: true
-});
+// Ensure your backend server is running on port 5000
+const API_URL = 'http://localhost:5000/api/linkedin';
 
-export const fetchLinkedinPosts = () =>
-  client.fetch(`
-    *[_type == "linkedinPost"] | order(publishedAt desc) {
-      _id,
-      title,
-      summary,
-      themes,
-      originalLink,
-      "image": coverImage.asset->url
-    }
-  `);
+export const fetchLinkedinPosts = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/posts`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching LinkedIn posts:', error);
+    return [];
+  }
+};
