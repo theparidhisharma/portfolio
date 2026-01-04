@@ -1,5 +1,14 @@
 import Reveal from "../components/common/Reveal";
 import { SKILLS } from "../data/skills";
+import { Terminal, Layers, Cpu, Code2 } from "lucide-react";
+import React from "react";
+
+const ICONS = {
+  Terminal,
+  Layers,
+  Cpu,
+  Code2
+};
 
 export default function Expertise() {
   return (
@@ -12,10 +21,20 @@ export default function Expertise() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/20 border border-white/20">
         {SKILLS.map((skill, i) => (
-          <Reveal key={i} delay={i * 100} className="bg-[#050505] p-6">
-            <div className="mb-8 text-neutral-600">{skill.icon}</div>
+          <Reveal
+            key={i}
+            delay={i * 100}
+            className="bg-[#050505] p-6 group hover:bg-[#0a0a0a] transition-colors h-full"
+          >
+            <div className="mb-8 text-neutral-600 group-hover:text-blue-500 transition-colors duration-300">
+              {ICONS[skill.icon] &&
+                React.createElement(ICONS[skill.icon], { size: 24 })}
+            </div>
+
             <h3 className="text-2xl font-black mb-4">{skill.name}</h3>
-            <p className="text-sm text-neutral-400">{skill.desc}</p>
+            <p className="text-sm text-neutral-400 leading-relaxed font-sans-ui">
+              {skill.desc}
+            </p>
           </Reveal>
         ))}
       </div>
