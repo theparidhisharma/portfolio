@@ -1,10 +1,8 @@
-const express = require("express");
+import express from 'express';
+import { getPosts } from '../controllers/linkedin.controller.js';
+
 const router = express.Router();
 
-const {
-  getLinkedinPosts
-} = require("../controllers/linkedin.controller");
+router.get('/', getPosts);
 
-router.get("/", getLinkedinPosts);
-
-module.exports = router;
+export default router;

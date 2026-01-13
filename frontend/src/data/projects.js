@@ -9,7 +9,7 @@ export const PROJECTS = [
     year: '2025',
     github: "https://github.com/theparidhisharma/RetargetIQ", 
     liveLink: "https://retarget-iq-frontend.vercel.app/", 
-    demoImage: "/RETARGETIQ_1.png" 
+    demoImage: "RETARGETIQ_1.png" 
   },
   {
     id: '02',
@@ -21,7 +21,7 @@ export const PROJECTS = [
     year: '2025',
     github: "https://github.com/theparidhisharma/AutoIQ",
     liveLink: "#", 
-    demoImage: "/AUTOIQ_1.png" 
+    demoImage: "AUTOIQ_1.png" 
   },
   {
     id: '03',
@@ -33,6 +33,6 @@ export const PROJECTS = [
     year: '2024',
     github: "https://github.com/theparidhisharma/StudentPortal",
     liveLink: "https://student-portal-navy-six.vercel.app/", 
-    demoImage: "/STUDENTPORTAL_1.png" 
+    demoImage: "STUDENTPORTAL_1.png" 
   }
 ];

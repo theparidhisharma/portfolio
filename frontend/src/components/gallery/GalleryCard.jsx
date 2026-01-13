@@ -8,12 +8,12 @@ const GalleryCard = ({ item, spanClass, setHoveredGalleryItem, hoveredGalleryIte
     setHoveredGalleryItem(item.id);
     const video = videoRef.current;
     if (item.video && video) {
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-            playPromise.catch(error => {
-                // Auto-play was prevented
-            });
-        }
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+          playPromise.catch(error => {
+              // Auto-play was prevented
+          });
+      }
     }
   };
 

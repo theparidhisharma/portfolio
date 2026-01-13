@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import CustomCursor from '../components/common/CustomCursor';
 import Marquee from '../components/common/Marquee';
+import ProjectModal from '../components/project/ProjectModal';
+import GalleryModal from '../components/gallery/GalleryModal';
+
+// Sections
 import Hero from '../sections/Hero';
 import About from '../sections/About';
 import Work from '../sections/Work';
@@ -9,15 +13,10 @@ import Thoughts from '../sections/Thoughts';
 import Gallery from '../sections/Gallery';
 import Footer from '../sections/Footer';
 
-// Modals
-import ProjectModal from '../components/project/ProjectModal';
-import GalleryModal from '../components/gallery/GalleryModal';
-
 export default function Portfolio() {
   const [scrolled, setScrolled] = useState(0);
-  
-  // State for interaction and Modals
   const [activeProject, setActiveProject] = useState(null);
+  const [hoveredGalleryItem, setHoveredGalleryItem] = useState(null);
   const [activeGalleryItem, setActiveGalleryItem] = useState(null);
 
   useEffect(() => {
@@ -29,32 +28,6 @@ export default function Portfolio() {
   return (
     <div className="min-h-screen bg-[#050505] text-[#e5e5e5] overflow-x-hidden selection:bg-blue-600 selection:text-white">
       <CustomCursor />
-
-      {/* --- GLOBAL STYLES --- */}
-      <style>{`
-        body { 
-          font-family: 'Times New Roman', Times, serif; 
-          cursor: none; 
-        }
-        .font-sans-ui {
-          font-family: system-ui, -apple-system, sans-serif;
-        }
-        @keyframes marquee {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-        .animate-marquee {
-          animation: marquee 40s linear infinite;
-        }
-        .reverse-marquee {
-          animation-direction: reverse;
-        }
-        .gradient-text {
-          background: linear-gradient(to right, #3b82f6, #8b5cf6);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-      `}</style>
 
       {/* Modals */}
       {activeProject && (
@@ -91,14 +64,18 @@ export default function Portfolio() {
         </nav>
       </header>
 
-      {/* SECTIONS */}
+      {/* --- SECTIONS --- */}
       <Hero />
       <Marquee text="Backend Engineering • Distributed Systems • Machine Learning •" />
       <About />
       <Work setActiveProject={setActiveProject} />
       <Expertise />
       <Thoughts />
-      <Gallery setActiveGalleryItem={setActiveGalleryItem} />
+      <Gallery 
+        setHoveredGalleryItem={setHoveredGalleryItem}
+        hoveredGalleryItem={hoveredGalleryItem}
+        setActiveGalleryItem={setActiveGalleryItem}
+      />
       <Footer />
     </div>
   );

@@ -1,14 +1,12 @@
-import axios from 'axios';
-
-// Ensure your backend server is running on port 5000
-const API_URL = 'http://localhost:5000/api/linkedin';
-
-export const fetchLinkedinPosts = async () => {
+export const fetchLinkedInPosts = async () => {
   try {
-    const response = await axios.get(`${API_URL}/posts`);
-    return response.data;
+    const response = await fetch('/api/linkedin');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return await response.json();
   } catch (error) {
-    console.error('Error fetching LinkedIn posts:', error);
-    return [];
+    console.error("Failed to fetch LinkedIn posts:", error);
+    return []; // Return empty array as fallback
   }
 };

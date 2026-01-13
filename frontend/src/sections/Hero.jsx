@@ -5,6 +5,7 @@ import { SOCIALS } from '../data/socials';
 const Hero = () => {
   return (
     <main className="relative pt-40 pb-32 px-6 md:px-12 z-10 max-w-[1600px] mx-auto min-h-[90vh] flex flex-col justify-center">
+      
       <Reveal>
         <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-12">
           {/* AVATAR */}
@@ -19,7 +20,7 @@ const Hero = () => {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-blue-500/30 bg-blue-900/10 backdrop-blur-sm font-sans-ui">
             <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
             <span className="text-xs uppercase tracking-widest font-bold text-blue-200">
-              Incoming SWE Intern @ DTDL
+              Ex SWE Intern @ DTDL
             </span>
           </div>
         </div>

@@ -1,26 +1,17 @@
-const fetch = require("node-fetch");
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const run = async () => {
-  const res = await fetch(
-    "http://localhost:5000/api/ai/generate-summary",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title:
-          "Two Months of Meaningful Growth at Deutsche Telekom Digital Labs",
-        themes: [
-          "Backend Engineering",
-          "Kafka",
-          "Microservices",
-          "Internship"
-        ]
-      })
-    }
-  );
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-  const data = await res.json();
-  console.log(data.summary);
+// This script simulates a one-time generation process
+// Usage: node scripts/generateSummaryOnce.js
+
+const run = () => {
+    console.log("Generating summary for portfolio content...");
+    // Logic to read project files and generate a bio
+    console.log("Summary generated successfully (Mock).");
 };
 
 run();

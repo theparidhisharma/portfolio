@@ -1,29 +1,18 @@
-const fs = require("fs");
-const path = require("path");
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const dataPath = path.resolve(
-  __dirname,
-  "..",
-  "data",
-  "linkedinPosts.json"
-);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const DATA_FILE = path.join(__dirname, '../data/linkedinPosts.json');
 
-const getLinkedinPosts = (req, res) => {
+export const getPosts = (req, res) => {
   try {
-    const rawData = fs.readFileSync(dataPath, "utf-8");
-
-    if (!rawData.trim()) {
-      return res.json([]);
-    }
-
-    const posts = JSON.parse(rawData);
+    const data = fs.readFileSync(DATA_FILE, 'utf8');
+    const posts = JSON.parse(data);
     res.json(posts);
-  } catch (err) {
-    console.error("LinkedIn posts error:", err.message);
-    res.status(500).json({
-      message: "Failed to fetch LinkedIn posts"
-    });
+  } catch (error) {
+    console.error("Error reading LinkedIn data:", error);
+    res.status(500).json({ message: "Failed to load posts" });
   }
 };
-
-module.exports = { getLinkedinPosts };

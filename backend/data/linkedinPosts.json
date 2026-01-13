@@ -1,33 +1,18 @@
 [
   {
     "id": 1,
-    "title": "Two Months of Meaningful Growth at Deutsche Telekom Digital Labs",
-    "summary": "Reflecting on my first corporate internship at Deutsche Telekom Digital Labs, where I worked with the Data Team on backend engineering and microservices. Gained hands-on experience with Java (8, 17, 21), Apache Kafka, Docker, API validation using Postman, and understanding how large-scale engineering systems operate in production.",
-    "topics": [
-      "Backend Engineering",
-      "Java",
-      "Microservices",
-      "Apache Kafka",
-      "Docker",
-      "API Testing"
-    ],
-    "date": "Aug 2025",
+    "title": "100 Days of DSA",
+    "snippet": "DSA journey highlights and key learnings from my 100 days of coding challenge.",
+    "date": "Recent",
     "link": "https://www.linkedin.com/feed/update/urn:li:activity:7371915870584958976/",
-    "image": "LINKEDIN_DTDL.png"
+    "image": "LINKEDIN_1.png"
   },
   {
     "id": 2,
-    "title": "DSA Under Load: Rate Limiting During End Sem Exams",
-    "summary": "A system-design-inspired reflection on balancing end semester exams with my 100 Days of DSA challenge. Framed exams as a high-CPU blocking service, internships as live production traffic, and DSA practice as rate-limited requests to keep the system healthy instead of crashing.",
-    "topics": [
-      "System Design",
-      "DSA",
-      "Rate Limiting",
-      "Time Management",
-      "Backend Engineering"
-    ],
-    "date": "Sep 2025",
+    "title": "Journey at DTDL",
+    "snippet": "Reflecting on my summer internship building scalable backends at Deutsche Telekom.",
+    "date": "Recent",
     "link": "https://www.linkedin.com/feed/update/urn:li:activity:7408132864497614848/",
-    "image": "LINKEDIN_DSA.png"
+    "image": "LINKEDIN_2.png"
   }
 ]

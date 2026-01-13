@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Camera } from 'lucide-react';
 import Reveal from '../components/common/Reveal';
 import GalleryCard from '../components/gallery/GalleryCard';
 import { GALLERY } from '../data/gallery';
-import { Camera } from 'lucide-react';
 
-const Gallery = ({ setActiveGalleryItem }) => {
-  const [hoveredGalleryItem, setHoveredGalleryItem] = useState(null);
-
+const Gallery = ({ setHoveredGalleryItem, hoveredGalleryItem, setActiveGalleryItem }) => {
+  
   // ALGORITHMIC LAYOUT GENERATOR
   const getGallerySpan = (index) => {
     const pattern = [
@@ -37,7 +36,7 @@ const Gallery = ({ setActiveGalleryItem }) => {
         {GALLERY.map((item, i) => {
           const spanClass = getGallerySpan(i); // Calculate layout dynamically
           return (
-            <Reveal key={item.id} delay={i * 100} className={`${spanClass} relative`}>
+            <Reveal key={item.id} delay={i * 100} className={`${spanClass} relative group cursor-pointer overflow-hidden rounded-sm transition-all duration-500 ${hoveredGalleryItem && hoveredGalleryItem !== item.id ? 'blur-[2px] opacity-40 scale-95 grayscale' : 'scale-100 opacity-100'}`}>
               <GalleryCard 
                 item={item} 
                 spanClass="" 

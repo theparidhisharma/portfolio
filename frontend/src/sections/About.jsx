@@ -1,36 +1,26 @@
 import React, { useState } from 'react';
+import { FileText, Users, Trophy, Music, Palette } from 'lucide-react';
 import Reveal from '../components/common/Reveal';
 import { EXPERIENCE } from '../data/experience';
-import { LEADERSHIP } from '../data/leadership';
+import { LEADERSHIP, FUN_FACTS } from '../data/leadership';
 import { SOCIALS } from '../data/socials';
-import { FileText, Trophy, Music, Palette, Users } from 'lucide-react';
+
+const IconMap = {
+  Trophy: Trophy,
+  Music: Music,
+  Palette: Palette
+};
 
 const About = () => {
   const [funFactIndex, setFunFactIndex] = useState(0);
   const [funFactRevealed, setFunFactRevealed] = useState(false);
-  
-  const FUN_FACTS = [
-    {
-      icon: <Trophy size={18} />,
-      label: "Gymnastics",
-      text: "Competitive gymnast for 8 years (2011-2019)."
-    },
-    {
-      icon: <Music size={18} />,
-      label: "Music",
-      text: "Singer: Won 3rd Solo at 'SYMPHONY, DELHI' & multiple Zonal 1st positions for East Delhi Choir."
-    },
-    {
-      icon: <Palette size={18} />,
-      label: "Kathak",
-      text: "Trained in Kathak dance; performed at various cultural festivals."
-    }
-  ];
 
   const handleFunFactClick = () => {
     if (!funFactRevealed) setFunFactRevealed(true);
     else setFunFactIndex((prev) => (prev + 1) % FUN_FACTS.length);
   };
+
+  const CurrentIcon = IconMap[FUN_FACTS[funFactIndex].iconName];
 
   return (
     <section id="about" className="py-40 px-6 md:px-12 relative z-10 max-w-[1400px] mx-auto">
@@ -52,6 +42,7 @@ const About = () => {
             </p>
           </Reveal>
           
+          {/* Experience Card */}
           {EXPERIENCE.map((exp, i) => (
             <Reveal key={i} delay={300 + (i*100)}>
               <div className="border-l-2 border-white/20 pl-8 py-2">
@@ -70,7 +61,7 @@ const About = () => {
           <Reveal delay={400}>
               <a 
                 href={SOCIALS.resume} 
-                target="_blank"
+                target="_blank" 
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-sans-ui font-bold text-sm uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-colors"
               >
@@ -103,7 +94,7 @@ const About = () => {
                     {funFactRevealed ? (
                       <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
                         <div className="flex items-center gap-2 mb-2 text-white">
-                          {FUN_FACTS[funFactIndex].icon}
+                          <CurrentIcon size={18} />
                           <span className="font-bold">{FUN_FACTS[funFactIndex].label}</span>
                         </div>
                         <p className="text-sm text-neutral-400 leading-relaxed font-sans-ui">

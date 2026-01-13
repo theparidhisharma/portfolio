@@ -12,6 +12,7 @@ const ProjectModal = ({ project, onClose }) => {
       />
       <div className="relative w-full max-w-6xl h-full md:h-auto max-h-[90vh] bg-[#0a0a0a] border border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row animate-in fade-in zoom-in-95 duration-300">
         
+        {/* Close Button */}
         <button 
           onClick={onClose}
           className="absolute top-4 right-4 z-50 p-2 rounded-full bg-black/50 hover:bg-white hover:text-black border border-white/10 transition-colors"
@@ -19,6 +20,7 @@ const ProjectModal = ({ project, onClose }) => {
           <X size={24} />
         </button>
 
+        {/* Image Side */}
         <div className="w-full md:w-1/2 h-64 md:h-auto relative bg-neutral-900 overflow-hidden">
           <img 
             src={project.demoImage} 
@@ -28,6 +30,7 @@ const ProjectModal = ({ project, onClose }) => {
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent md:bg-gradient-to-r" />
         </div>
 
+        {/* Content Side */}
         <div className="w-full md:w-1/2 p-8 md:p-12 overflow-y-auto">
           <div className="mb-2">
             <span className="text-xs font-bold font-sans-ui uppercase tracking-widest text-blue-400">

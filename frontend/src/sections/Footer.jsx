@@ -1,7 +1,7 @@
 import React from 'react';
+import { Mail, Github, Linkedin, Code2, Cpu, Zap } from 'lucide-react';
 import Reveal from '../components/common/Reveal';
 import { SOCIALS } from '../data/socials';
-import { Mail, Github, Linkedin, Code2, Cpu, Zap } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -42,7 +42,6 @@ const Footer = () => {
             <a href={SOCIALS.leetcode} target="_blank" rel="noreferrer" className="hover:text-blue-500 transition-colors hover:scale-110 transform duration-200" title="LeetCode">
               <Code2 size={32} />
             </a>
-             {/* Codolio Placeholder */}
             <a href={SOCIALS.codolio} target="_blank" rel="noreferrer" className="hover:text-blue-500 transition-colors hover:scale-110 transform duration-200" title="Codolio">
               <Cpu size={32} />
             </a>

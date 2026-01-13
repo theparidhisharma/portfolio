@@ -1,6 +1,14 @@
 import React from 'react';
+import { Terminal, Layers, Cpu, Code2 } from 'lucide-react';
 import Reveal from '../components/common/Reveal';
 import { SKILLS } from '../data/skills';
+
+const IconMap = {
+  Terminal: Terminal,
+  Layers: Layers,
+  Cpu: Cpu,
+  Code2: Code2
+};
 
 const Expertise = () => {
   return (
@@ -11,19 +19,22 @@ const Expertise = () => {
         </h2>
       </Reveal>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/20 border border-white/20">
-        {SKILLS.map((skill, i) => (
-          <Reveal key={i} delay={i * 100} className="bg-[#050505] p-6 group hover:bg-[#0a0a0a] transition-colors h-full">
-            <div className="mb-8 text-neutral-600 group-hover:text-blue-500 transition-colors duration-300">
-              {skill.icon}
-            </div>
-            <h3 className="text-2xl font-black mb-4">
-              {skill.name}
-            </h3>
-            <p className="text-sm text-neutral-400 leading-relaxed font-sans-ui">
-              {skill.desc}
-            </p>
-          </Reveal>
-        ))}
+        {SKILLS.map((skill, i) => {
+          const IconComponent = IconMap[skill.iconName];
+          return (
+            <Reveal key={i} delay={i * 100} className="bg-[#050505] p-6 group hover:bg-[#0a0a0a] transition-colors h-full">
+              <div className="mb-8 text-neutral-600 group-hover:text-blue-500 transition-colors duration-300">
+                <IconComponent size={24} />
+              </div>
+              <h3 className="text-2xl font-black mb-4">
+                {skill.name}
+              </h3>
+              <p className="text-sm text-neutral-400 leading-relaxed font-sans-ui">
+                {skill.desc}
+              </p>
+            </Reveal>
+          );
+        })}
       </div>
     </section>
   );
