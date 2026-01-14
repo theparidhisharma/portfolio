@@ -1,28 +1,59 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* 1. IMPORT FONTS (Matches the Hero Typography) */
+
 :root {
-  font-family: 'Times New Roman', Times, serif; 
-  cursor: none;
-  background-color: #050505;
+  /* Default to Clean Sans-Serif (Inter) for body text */
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  /* Pitch Black Background to match Galaxy Canvas */
+  background-color: #000000;
   color: #e5e5e5;
+  
+  /* Keep cursor: none ONLY if you have a custom cursor component */
+  cursor: none; 
 }
 
 body {
   margin: 0;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* 2. MATCHING SELECTION COLOR */
 ::selection {
-  background-color: #2563eb;
+  background-color: rgba(167, 139, 250, 0.3); /* Soft Violet transparency */
   color: white;
 }
 
-.font-sans-ui {
-  font-family: system-ui, -apple-system, sans-serif;
+/* 3. UTILITY CLASSES (Used in your Hero) */
+.font-serif-custom {
+  font-family: 'Playfair Display', serif;
 }
 
+.font-sans-custom {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Optional: Set all Headings to Serif automatically */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+}
+
+/* 4. UPDATED GRADIENT (Matches the elegant Blue-Indigo-Purple from Hero) */
+.gradient-text {
+  background: linear-gradient(to right, #bfdbfe, #c7d2fe, #a5b4fc); /* blue-200 -> indigo-200 */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+/* --- ANIMATIONS (Kept from your original) --- */
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -34,10 +65,4 @@ body {
 
 .reverse-marquee {
   animation-direction: reverse;
-}
-
-.gradient-text {
-  background: linear-gradient(to right, #3b82f6, #8b5cf6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }

@@ -9,7 +9,7 @@ export const PROJECTS = [
     year: '2025',
     github: "https://github.com/theparidhisharma/RetargetIQ", 
     liveLink: "https://retarget-iq-frontend.vercel.app/", 
-    demoImage: "RETARGETIQ_1.png" 
+    demoImage: "https://res.cloudinary.com/duwg0vjfv/image/upload/v1768316935/Screenshot_2026-01-13_203703_qbogtc.png" 
   },
   {
     id: '02',

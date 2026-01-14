@@ -26,7 +26,7 @@ export default function Portfolio() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#e5e5e5] overflow-x-hidden selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-black text-[#e5e5e5] overflow-x-hidden selection:bg-indigo-500/30 selection:text-white">
       <CustomCursor />
 
       {/* Modals */}
@@ -37,28 +37,23 @@ export default function Portfolio() {
         <GalleryModal item={activeGalleryItem} onClose={() => setActiveGalleryItem(null)} />
       )}
 
-      {/* --- BACKGROUND AMBIENCE --- */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div 
-          className="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-blue-900/20 rounded-full blur-[120px]"
-          style={{ transform: `translateY(${scrolled * 0.1}px)` }}
-        />
-        <div 
-          className="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] bg-violet-900/20 rounded-full blur-[120px]"
-          style={{ transform: `translateY(${-scrolled * 0.1}px)` }}
-        />
-      </div>
-
       {/* --- HEADER --- */}
-      <header className={`fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center transition-all duration-500 ${scrolled > 50 ? 'bg-[#050505]/80 backdrop-blur-md border-b border-white/10' : 'bg-transparent'}`}>
-        <div className="text-2xl font-black tracking-tighter uppercase hover-trigger mix-blend-difference">
+      <header className={`fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center transition-all duration-500 ${scrolled > 50 ? 'bg-black/80 backdrop-blur-md border-b border-white/5' : 'bg-transparent'}`}>
+        {/* LOGO: Serif to match Hero Title */}
+        <div className="font-serif-custom text-2xl font-bold tracking-tight uppercase hover-trigger mix-blend-difference text-white">
           Paridhi.sh
         </div>
-        <nav className="flex gap-8 text-xs font-bold font-sans-ui uppercase tracking-widest mix-blend-difference">
+        
+        {/* NAV: Sans-Serif for readability */}
+        <nav className="hidden md:flex gap-8 text-xs font-medium font-sans-custom uppercase tracking-widest mix-blend-difference text-white/80">
           {['About', 'Work', 'Expertise', 'Gallery', 'Contact'].map((item) => (
-            <a key={item} href={`#${item.toLowerCase()}`} className="hover-trigger hover:text-blue-400 transition-colors relative group">
+            <a 
+                key={item} 
+                href={`#${item.toLowerCase()}`} 
+                className="hover-trigger hover:text-white transition-colors relative group"
+            >
               {item}
-              <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-blue-400 transition-all duration-300 group-hover:w-full" />
+              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-indigo-400 transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
         </nav>
@@ -66,7 +61,10 @@ export default function Portfolio() {
 
       {/* --- SECTIONS --- */}
       <Hero />
+      
+      {/* Marquee acts as a nice divider after the galaxy */}
       <Marquee text="Backend Engineering • Distributed Systems • Machine Learning •" />
+      
       <About />
       <Work setActiveProject={setActiveProject} />
       <Expertise />

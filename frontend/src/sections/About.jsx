@@ -33,6 +33,15 @@ const About = () => {
                   Experience
                 </h2>
               </Reveal>
+              <Reveal delay={200}>
+                <div className="w-45 h-45 rounded-full overflow-hidden border-4 border-white/2">
+                  <img 
+                    src="https://res.cloudinary.com/duwg0vjfv/image/upload/v1768317041/me_eojinn.png" 
+                    alt="Profile" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </Reveal>
             </div>
         </div>
         <div className="md:col-span-8 space-y-16">
