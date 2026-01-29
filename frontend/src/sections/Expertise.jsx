@@ -1,7 +1,7 @@
 import React from 'react';
 import { Terminal, Layers, Cpu, Code2 } from 'lucide-react';
 import Reveal from '../components/common/Reveal';
-import { SKILLS } from '../data/skills';
+import { SKILLS } from '../config/skills';
 
 const IconMap = {
   Terminal: Terminal,

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { FileText, Users, Trophy, Music, Palette } from 'lucide-react';
 import Reveal from '../components/common/Reveal';
-import { EXPERIENCE } from '../data/experience';
-import { LEADERSHIP, FUN_FACTS } from '../data/leadership';
-import { SOCIALS } from '../data/socials';
+import { EXPERIENCE } from '../config/experience';
+import { LEADERSHIP, FUN_FACTS } from '../config/leadership';
+import { SOCIALS } from '../config/socials';
 
 const IconMap = {
   Trophy: Trophy,

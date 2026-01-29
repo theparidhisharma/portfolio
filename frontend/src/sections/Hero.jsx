@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { SOCIALS } from '../data/socials'; 
+import { SOCIALS } from '../config/socials'; 
 
 // --- CONFIGURATION ---
 const STAR_COUNT = 800;

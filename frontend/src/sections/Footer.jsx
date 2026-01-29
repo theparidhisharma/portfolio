@@ -1,7 +1,7 @@
 import React from 'react';
 import { Mail, Github, Linkedin, Code2, Cpu, Zap } from 'lucide-react';
 import Reveal from '../components/common/Reveal';
-import { SOCIALS } from '../data/socials';
+import { SOCIALS } from '../config/socials';
 
 const Footer = () => {
   return (

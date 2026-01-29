@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "title": "AutoIQ Failure Analysis",
+    "image": "/images/autoiq.jpg",
+    "description": "ML-driven predictive maintenance system"
+  },
+  {
+    "id": 2,
+    "title": "Kafka Event Flow",
+    "image": "/images/kafka.jpg",
+    "description": "Event-driven microservice architecture"
+  }
+]

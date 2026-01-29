@@ -1,6 +1,7 @@
 import express from 'express';
 const router = express.Router();
 
+
 // Route: POST /api/ai/summary
 router.post('/summary', async (req, res) => {
   try {
